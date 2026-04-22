@@ -33,7 +33,7 @@ def local_database():
         local_database = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="0smartPower0",
+            password="0SmartPower0",
             database="enmms"
         )
         if local_database.is_connected():
