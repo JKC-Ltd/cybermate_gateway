@@ -7,7 +7,7 @@ import sys
 
 # DECLARING ID's
 gateway_id = 1
-gateway_code = "GAT-01"
+gateway_code = "GAT-1"
 
 
 def get_metter_ids():
