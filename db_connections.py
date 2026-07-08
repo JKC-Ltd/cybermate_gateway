@@ -34,7 +34,7 @@ def local_database():
             host="localhost",
             user="root",
             password="0SmartPower0",
-            database="enmms"
+            database="cybermate"
         )
         if local_database.is_connected():
             return local_database
