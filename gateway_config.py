@@ -10,20 +10,20 @@ gateway_id = 1
 gateway_code = "GAT-1"
 
 
-def get_metter_ids():
+def get_metter_ids(local_conn):
     meters_result = []
-    local_conn = db_connections.local_database()
     query = local_conn.cursor(dictionary=True)
 
-    sql = f""" SELECT sensors.id AS id, slave_address, sensor_reg_address, sensor_type_parameter, sensor_models.id AS sensor_model_id FROM sensors
-                            LEFT JOIN sensor_models
-                                ON sensors.sensor_model_id = sensor_models.id
-                            LEFT JOIN sensor_types
-                                ON sensor_models.sensor_type_id = sensor_types.id
-                            WHERE sensors.gateway_id = {gateway_id}"""
-    query.execute(sql)
+    sql = """SELECT sensors.id AS id, slave_address, sensor_reg_address,
+                    sensor_type_parameter, sensor_models.id AS sensor_model_id
+             FROM sensors
+             LEFT JOIN sensor_models ON sensors.sensor_model_id = sensor_models.id
+             LEFT JOIN sensor_types ON sensor_models.sensor_type_id = sensor_types.id
+             WHERE sensors.gateway_id = %s"""
+    query.execute(sql, (gateway_id,))
 
     results = query.fetchall()
+    query.close()
 
     for row in results:
         exploded_reg_address = [
@@ -37,9 +37,6 @@ def get_metter_ids():
                 'parameter': exploded_parameter
                 }
         meters_result.append(data)
-
-    query.close()
-    local_conn.close()
 
     return meters_result
 
