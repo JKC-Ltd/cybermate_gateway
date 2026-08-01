@@ -54,8 +54,8 @@ for meter_result in meter_results:
             try:
 
                 if model_id == 1:
-                    response = client.read_holding_registers(address=int(
-                        register_address), count=2, slave=slave_address)
+                    response = client.read_input_registers(address=int(
+                        register_address), count=2, device_id=slave_address)
                 else:
                     # response = client.read_input_registers(address=int(
                     #     register_address), count=2, slave=slave_address)
